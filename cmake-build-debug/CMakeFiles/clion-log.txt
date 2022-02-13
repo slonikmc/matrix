@@ -1,0 +1,13 @@
+"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\Users\Akelk\CLionProjects\5d
+-- Configuring done
+CMake Error at libs/CMakeLists.txt:1 (add_library):
+  Cannot find source file:
+
+    matrix
+
+
+CMake Error at libs/CMakeLists.txt:1 (add_library):
+  No SOURCES given to target: data_structures
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
