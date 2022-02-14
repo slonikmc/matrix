@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/Akelk/CLionProjects/5d/main.c" "C:/Users/Akelk/CLionProjects/5d/cmake-build-debug/CMakeFiles/5d.dir/main.c.obj"
+  "C:/Users/Akelk/CLionProjects/5d/libs/data_structures/matrix/matrix.c" "C:/Users/Akelk/CLionProjects/5d/cmake-build-debug/libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -22,7 +22,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "C:/Users/Akelk/CLionProjects/5d/cmake-build-debug/libs/data_structures/CMakeFiles/data_structures.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

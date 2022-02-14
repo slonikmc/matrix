@@ -87,6 +87,7 @@ CMakeFiles/5d.dir/main.c.s: cmake_force
 
 5d.exe: CMakeFiles/5d.dir/main.c.obj
 5d.exe: CMakeFiles/5d.dir/build.make
+5d.exe: libs/data_structures/libdata_structures.a
 5d.exe: CMakeFiles/5d.dir/linklibs.rsp
 5d.exe: CMakeFiles/5d.dir/objects1.rsp
 5d.exe: CMakeFiles/5d.dir/link.txt

@@ -5,3 +5,4 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(5d main.c)
 add_subdirectory(libs)
+target_link_libraries(5d data_structures)

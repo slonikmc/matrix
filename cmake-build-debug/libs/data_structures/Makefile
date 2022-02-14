@@ -86,14 +86,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Akelk\CLionProjects\5d\cmake-build-debug\CMakeFiles C:\Users\Akelk\CLionProjects\5d\cmake-build-debug\\CMakeFiles\progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Akelk\CLionProjects\5d\cmake-build-debug\CMakeFiles C:\Users\Akelk\CLionProjects\5d\cmake-build-debug\libs\data_structures\\CMakeFiles\progress.marks
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libs/data_structures/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Akelk\CLionProjects\5d\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 clean
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libs/data_structures/clean
 .PHONY : clean
 
 # The main clean target
@@ -102,68 +102,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 preinstall
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libs/data_structures/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 preinstall
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libs/data_structures/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named 5d
+# Convenience name for target.
+libs/data_structures/CMakeFiles/data_structures.dir/rule:
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libs/data_structures/CMakeFiles/data_structures.dir/rule
+.PHONY : libs/data_structures/CMakeFiles/data_structures.dir/rule
 
-# Build rule for target.
-5d: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 5d
-.PHONY : 5d
-
-# fast build rule for target.
-5d/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\5d.dir\build.make CMakeFiles/5d.dir/build
-.PHONY : 5d/fast
-
-#=============================================================================
-# Target rules for targets named data_structures
-
-# Build rule for target.
-data_structures: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 data_structures
+# Convenience name for target.
+data_structures: libs/data_structures/CMakeFiles/data_structures.dir/rule
 .PHONY : data_structures
 
 # fast build rule for target.
 data_structures/fast:
-	$(MAKE) $(MAKESILENT) -f libs\data_structures\CMakeFiles\data_structures.dir\build.make libs/data_structures/CMakeFiles/data_structures.dir/build
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libs\data_structures\CMakeFiles\data_structures.dir\build.make libs/data_structures/CMakeFiles/data_structures.dir/build
 .PHONY : data_structures/fast
 
-main.obj: main.c.obj
-.PHONY : main.obj
+matrix/matrix.obj: matrix/matrix.c.obj
+.PHONY : matrix/matrix.obj
 
 # target to build an object file
-main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\5d.dir\build.make CMakeFiles/5d.dir/main.c.obj
-.PHONY : main.c.obj
+matrix/matrix.c.obj:
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libs\data_structures\CMakeFiles\data_structures.dir\build.make libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj
+.PHONY : matrix/matrix.c.obj
 
-main.i: main.c.i
-.PHONY : main.i
+matrix/matrix.i: matrix/matrix.c.i
+.PHONY : matrix/matrix.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\5d.dir\build.make CMakeFiles/5d.dir/main.c.i
-.PHONY : main.c.i
+matrix/matrix.c.i:
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libs\data_structures\CMakeFiles\data_structures.dir\build.make libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.i
+.PHONY : matrix/matrix.c.i
 
-main.s: main.c.s
-.PHONY : main.s
+matrix/matrix.s: matrix/matrix.c.s
+.PHONY : matrix/matrix.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\5d.dir\build.make CMakeFiles/5d.dir/main.c.s
-.PHONY : main.c.s
+matrix/matrix.c.s:
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libs\data_structures\CMakeFiles\data_structures.dir\build.make libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.s
+.PHONY : matrix/matrix.c.s
 
 # Help Target
 help:
@@ -173,11 +161,10 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... 5d
 	@echo ... data_structures
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... matrix/matrix.obj
+	@echo ... matrix/matrix.i
+	@echo ... matrix/matrix.s
 .PHONY : help
 
 
@@ -189,6 +176,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
+	cd /d C:\Users\Akelk\CLionProjects\5d\cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
