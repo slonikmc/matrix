@@ -1,6 +1,7 @@
 #include "libs/data_structures/matrix/matrix.h"
 #include <assert.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 void test_getMemMatrix() {
     matrix m = createMatrixFromArray(
@@ -168,12 +169,13 @@ void test_insertionSortColsMatrixByColCriteria() {
     );
     matrix m2 = createMatrixFromArray(
             (int[]) {
-                    1, 7, 8,
+                    8, 7, 8,
                     6, 4, 5,
-                    8, 7, 8
+                    7, 8, 1
             },
             3, 3
     );
+
     insertionSortColsMatrixByColCriteria(m, getMin1);
     assert(areTwoMatricesEqual(m, m2));
 }
@@ -332,6 +334,7 @@ void test() {
     test_swapRows();
     test_swapColumns();
     test_insertionSortRowsMatrixByRowCriteria();
+    test_insertionSortColsMatrixByColCriteria();
     test_isSquareMatrix();
     test_areTwoMatricesEqual();
     test_isEMatrix();
@@ -447,7 +450,6 @@ matrix mulMatrices(matrix m1, matrix m2) {
             for (int nRow = 0; nRow < m2.nRows; nRow++)
                 res.values[i][j] += m1.values[i][nRow] * m2.values[nRow][j];
         }
-
     return res;
 }
 
@@ -500,8 +502,8 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
 void task_5() {
     matrix m = createMatrixFromArray(
             (int[]) {
-                    1, 42, 3,
-                    4, 5, 6,
+                    1, 1, 3,
+                    2, 1, 2,
                     7, 8, 9
             },
             3, 3
@@ -510,8 +512,36 @@ void task_5() {
     for (int i = 0; i < m.nRows; i++) {
         a[i] = getSum(m.values[i], m.nCols);
     }
-    if(isUnique(a, m.nRows))
-    transposeIfMatrixHasNotEqualSumOfRows(m);
+    if (isUnique(a, m.nRows))
+        transposeIfMatrixHasNotEqualSumOfRows(m);
+}
+
+bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
+    matrix chekEMatrix = mulMatrices(m1, m2);
+    if (isEMatrix(chekEMatrix))
+        return true;
+    return false;
+}
+
+void task_6() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 2,
+                    3, 5
+            },
+            2, 2
+    );
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    -5, 2,
+                    3, -1
+            },
+            2, 2
+    );
+    if (isMutuallyInverseMatrices(m1, m2))
+        printf("isMutuallyInverseMatrices");
+    else
+        printf("isNotMutuallyInverseMatrices");
 }
 
 int main() {
@@ -520,6 +550,7 @@ int main() {
     task_3();
     task_4();
     task_5();
+    task_6();
     test();
 
     return 0;
