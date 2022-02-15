@@ -9,10 +9,12 @@
 C:/Users/Akelk/CLionProjects/5d/libs/data_structures/matrix/matrix.h
 stdlib.h
 -
+stdbool.h
+-
 
 C:/Users/Akelk/CLionProjects/5d/main.c
-stdio.h
--
 libs/data_structures/matrix/matrix.h
 C:/Users/Akelk/CLionProjects/5d/libs/data_structures/matrix/matrix.h
+assert.h
+-
 
