@@ -544,13 +544,65 @@ void task_6() {
         printf("isNotMutuallyInverseMatrices");
 }
 
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+    long long sum = 0;
+    for (int i = 1; i < m.nRows; i++) {
+        int row = i;
+        int column = 0;
+        long long maxValue = m.values[row][column];
+        while (row < m.nRows - 1 && column < m.nCols - 1) {
+            row++;
+            column++;
+            maxValue = max(maxValue, m.values[row][column]);
+        }
+        sum += maxValue;
+    }
+    for (int j = 1; j < m.nCols; j++) {
+        int row = 0;
+        int column = j;
+        long long maxValue = m.values[row][column];
+        while (row < m.nRows - 1 && column < m.nCols - 1) {
+            row++;
+            column++;
+            maxValue = max(maxValue, m.values[row][column]);
+        }
+        sum += maxValue;
+    }
+
+    return sum;
+}
+
+
+
+void task_7() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 5, 4,
+                    1, 3, 6, 3,
+                    3, 2, 1, 2
+            },
+            3, 4
+    );
+    long long res = findSumOfMaxesOfPseudoDiagonal(m);
+
+//    Выводит 20
+//    printf("%lld", res);
+
+}
+
+
 int main() {
     task_1();
     task_2();
     task_3();
     task_4();
     task_5();
-    task_6();
+    //task_6();
+    task_7();
     test();
 
     return 0;
