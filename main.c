@@ -126,27 +126,56 @@ void test_swapColumns() {
     test_swapColumns2();
 }
 
-//void test_insertionSortRowsMatrixByRowCriteria() {
-//    matrix m = createMatrixFromArray(
-//            (int[]) {
-//                    0, 2, 3,
-//                    4, 0, 0,
-//                    7, 8, 9
-//            },
-//            3, 3
-//    );
-//    matrix m2 = createMatrixFromArray(
-//            (int[]) {
-//                    4, 0, 0,
-//                    0, 2, 3,
-//                    7, 8, 9
-//            },
-//            3, 3
-//    );
-//    insertionSortRowsMatrixByRowCriteria(m, countZeros);
-//    outputMatrix(m);
-//    assert(areTwoMatricesEqual(m, m2));
-//}
+int getMin1(const int *a, int n) {
+    int min = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < min)
+            min = a[i];
+    }
+    return min;
+}
+
+void test_insertionSortRowsMatrixByRowCriteria() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    7, 8, 8,
+                    4, 5, 6,
+                    7, 8, 1
+            },
+            3, 3
+    );
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    7, 8, 1,
+                    4, 5, 6,
+                    7, 8, 8
+            },
+            3, 3
+    );
+    insertionSortRowsMatrixByRowCriteria(m, getMin1);
+    assert(areTwoMatricesEqual(m, m2));
+}
+
+void test_insertionSortColsMatrixByColCriteria() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    7, 8, 8,
+                    4, 5, 6,
+                    7, 8, 1
+            },
+            3, 3
+    );
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    1, 7, 8,
+                    6, 4, 5,
+                    8, 7, 8
+            },
+            3, 3
+    );
+    insertionSortColsMatrixByColCriteria(m, getMin1);
+    assert(areTwoMatricesEqual(m, m2));
+}
 
 void test_isSquareMatrix1() {
     matrix m = createMatrixFromArray(
@@ -301,7 +330,7 @@ void test() {
     test_getMemArrayOfMatrices();
     test_swapRows();
     test_swapColumns();
-//    test_insertionSortRowsMatrixByRowCriteria();
+    test_insertionSortRowsMatrixByRowCriteria();
     test_isSquareMatrix();
     test_areTwoMatricesEqual();
     test_isEMatrix();
@@ -409,13 +438,18 @@ void task_3() {
             3, 3
     );
     sortColsByMinElement(m);
-    outputMatrix(m);
+    // outputMatrix(m);
+}
+
+void task_4() {
 
 }
+
 int main() {
     task_1();
     task_2();
     task_3();
+    task_4();
     test();
 
     return 0;
