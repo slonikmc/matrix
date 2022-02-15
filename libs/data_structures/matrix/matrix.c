@@ -81,11 +81,11 @@ void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int))
     for (int i = 0; i < m.nRows; i++) {
         a[i] = criteria(m.values[i], m.nCols);
     }
-    for (int i = 1; i < m.nCols; i++) {
+    for (int i = 1; i < m.nRows; i++) {
         int iRead = i;
         while (a[iRead - 1] > a[iRead] && iRead > 0) {
             swap(&a[iRead - 1], &a[iRead]);
-            swapRows(m, iRead, iRead + 1);
+            swapRows(m, iRead - 1, iRead);
             iRead--;
         }
     }

@@ -45,9 +45,9 @@ void test_swapRows1() {
     );
     swapRows(m, 0, 1);
 
-    assert(m.values[0][1] == m2.values[0][1]);
+    assert(m.values[0][0] == m2.values[0][0]);
     assert(m.values[0][2] == m2.values[0][2]);
-    assert(m.values[0][3] == m2.values[0][3]);
+    assert(m.values[0][1] == m2.values[0][1]);
 }
 
 void test_swapRows2() {
@@ -69,7 +69,7 @@ void test_swapRows2() {
 
     assert(m.values[0][1] == m2.values[0][1]);
     assert(m.values[0][2] == m2.values[0][2]);
-    assert(m.values[0][3] == m2.values[0][3]);
+    assert(m.values[0][0] == m2.values[0][0]);
 }
 
 void test_swapRows() {
@@ -313,7 +313,7 @@ void test() {
 
 ///////// 2 часть //////////
 
-void task_1 () {
+void task_1() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -323,13 +323,57 @@ void task_1 () {
             3, 3
     );
     position min = getMinValuePos(m);
-    position max= getMaxValuePos(m);
+    position max = getMaxValuePos(m);
     swapRows(m, min.rowIndex, max.rowIndex);
 //    outputMatrix(m);
 }
 
+void swap(int *a, int *b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int getMax(int *a, int n) {
+    int max = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] > max)
+            max = a[i];
+    }
+    return max;
+}
+
+void sortRowsByMaxElement(matrix m) {
+    int *a = (int *) malloc(sizeof(int) * m.nRows);
+    for (int i = 0; i < m.nRows; i++) {
+        a[i] = getMax(m.values[i], m.nCols);
+    }
+    for (int i = 1; i < m.nRows; i++) {
+        int iRead = i;
+        while (a[iRead - 1] > a[iRead] && iRead > 0) {
+            swap(&a[iRead - 1], &a[iRead]);
+            swapRows(m, iRead - 1, iRead);
+            iRead--;
+        }
+    }
+}
+
+task_2() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    1, 42, 3,
+                    4, 5, 6,
+                    7, 8, 9
+            },
+            3, 3
+    );
+    sortRowsByMaxElement(m);
+    // outputMatrix(m);
+}
+
 int main() {
     task_1();
+    task_2();
     test();
 
     return 0;
