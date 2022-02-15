@@ -340,7 +340,7 @@ void test() {
     test_getMaxValuePos();
 }
 
-///////// 2 часть //////////
+///////// Chapter 2  //////////
 
 void task_1() {
     matrix m = createMatrixFromArray(
@@ -354,7 +354,6 @@ void task_1() {
     position min = getMinValuePos(m);
     position max = getMaxValuePos(m);
     swapRows(m, min.rowIndex, max.rowIndex);
-//    outputMatrix(m);
 }
 
 void swap(int *a, int *b) {
@@ -397,7 +396,6 @@ void task_2() {
             3, 3
     );
     sortRowsByMaxElement(m);
-    // outputMatrix(m);
 }
 
 int getMin(const int *a, int n) {
@@ -438,11 +436,38 @@ void task_3() {
             3, 3
     );
     sortColsByMinElement(m);
-    // outputMatrix(m);
+}
+
+matrix mulMatrices(matrix m1, matrix m2) {
+    matrix res = getMemMatrix(m1.nRows, m1.nCols);
+    for (int i = 0; i < m1.nRows; i++)
+        for (int j = 0; j < m1.nCols; j++) {
+            res.values[i][j] = 0;
+            for (int nRow = 0; nRow < m2.nRows; nRow++)
+                res.values[i][j] += m1.values[i][nRow] * m2.values[nRow][j];
+        }
+
+    return res;
+}
+
+void getSquareOfMatrixIfSymmetric(matrix *m) {
+    matrix m1 = *m;
+    matrix m2 = *m;
+    *m = mulMatrices(m1, m2);
 }
 
 void task_4() {
-
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    2, 1, 2,
+                    3, 2, 1
+            },
+            3, 3
+    );
+    if (isSymmetricMatrix(m)) {
+        getSquareOfMatrixIfSymmetric(&m);
+    }
 }
 
 int main() {

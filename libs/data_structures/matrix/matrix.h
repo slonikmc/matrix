@@ -26,7 +26,7 @@ matrix getMemMatrix(int nRows, int nCols);
 matrix *getMemArrayOfMatrices(int nMatrices, int nRows, int nCols);
 
 // Освобождает память, выделенную под хранение матрицы m.
-void freeMemMatrix(matrix *m);
+void freeMemMatrix(matrix m);
 
 // Освобождает память, выделенную под хранение массива ms из nMatrices матриц.
 void freeMemMatrices(matrix *ms, int nMatrices);
