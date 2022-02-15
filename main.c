@@ -1,5 +1,6 @@
 #include "libs/data_structures/matrix/matrix.h"
 #include <assert.h>
+#include <stdbool.h>
 
 void test_getMemMatrix() {
     matrix m = createMatrixFromArray(
@@ -470,11 +471,55 @@ void task_4() {
     }
 }
 
+bool isUnique(const long long *a, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] == a[i])
+                return false;
+        }
+    }
+    return true;
+}
+
+long long getSum(const int *a, int n) {
+    long long res = 0;
+    for (int i = 0; i < n; i++)
+        res += a[i];
+    return res;
+}
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
+    assert(isSquareMatrix(m));
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < i; j++) {
+            swap(&m.values[i][j], &m.values[j][i]);
+        }
+    }
+}
+
+void task_5() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    1, 42, 3,
+                    4, 5, 6,
+                    7, 8, 9
+            },
+            3, 3
+    );
+    long long *a = (long long *) malloc(sizeof(int) * m.nRows);
+    for (int i = 0; i < m.nRows; i++) {
+        a[i] = getSum(m.values[i], m.nCols);
+    }
+    if(isUnique(a, m.nRows))
+    transposeIfMatrixHasNotEqualSumOfRows(m);
+}
+
 int main() {
     task_1();
     task_2();
     task_3();
     task_4();
+    task_5();
     test();
 
     return 0;
