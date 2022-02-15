@@ -334,7 +334,7 @@ void swap(int *a, int *b) {
     *b = t;
 }
 
-int getMax(int *a, int n) {
+int getMax(const int *a, int n) {
     int max = a[0];
     for (int i = 1; i < n; i++) {
         if (a[i] > max)
@@ -358,7 +358,7 @@ void sortRowsByMaxElement(matrix m) {
     }
 }
 
-task_2() {
+void task_2() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 42, 3,
@@ -371,9 +371,51 @@ task_2() {
     // outputMatrix(m);
 }
 
+int getMin(const int *a, int n) {
+    int min = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < min)
+            min = a[i];
+    }
+    return min;
+}
+
+void sortColsByMinElement(matrix m) {
+    int *a = (int *) malloc(sizeof(int) * m.nCols);
+    int *col = (int *) malloc(sizeof(int) * m.nRows);
+    for (int j = 0; j < m.nCols; j++) {
+        for (int i = 0; i < m.nRows; i++) {
+            col[i] = m.values[i][j];
+        }
+        a[j] = getMin(col, m.nRows);
+    }
+    for (int j = 1; j < m.nCols; j++) {
+        int iRead = j;
+        while (a[iRead - 1] > a[iRead] && iRead > 0) {
+            swap(&a[iRead - 1], &a[iRead]);
+            swapColumns(m, iRead - 1, iRead);
+            iRead--;
+        }
+    }
+}
+
+void task_3() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    1, 9, 3,
+                    4, 5, 6,
+                    7, 8, 9
+            },
+            3, 3
+    );
+    sortColsByMinElement(m);
+    outputMatrix(m);
+
+}
 int main() {
     task_1();
     task_2();
+    task_3();
     test();
 
     return 0;

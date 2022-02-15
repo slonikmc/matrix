@@ -98,13 +98,13 @@ void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int))
         for (int i = 0; i < m.nRows; i++) {
             col[i] = m.values[i][j];
         }
-        col[j] = criteria(col, m.nRows);
+        a[j] = criteria(col, m.nRows);
     }
     for (int i = 1; i < m.nRows; i++) {
         int iRead = i;
         while (a[iRead - 1] > a[iRead] && iRead > 0) {
             swap(&a[iRead - 1], &a[iRead]);
-            swapColumns(m, iRead, iRead + 1);
+            swapColumns(m, iRead - 1, iRead);
             iRead--;
         }
     }
