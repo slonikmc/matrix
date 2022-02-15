@@ -311,8 +311,25 @@ void test() {
     test_getMaxValuePos();
 }
 
-int main() {
+///////// 2 часть //////////
 
+void task_1 () {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 9
+            },
+            3, 3
+    );
+    position min = getMinValuePos(m);
+    position max= getMaxValuePos(m);
+    swapRows(m, min.rowIndex, max.rowIndex);
+//    outputMatrix(m);
+}
+
+int main() {
+    task_1();
     test();
 
     return 0;
