@@ -538,13 +538,13 @@ void task_6() {
             },
             2, 2
     );
-    if (isMutuallyInverseMatrices(m1, m2))
-        printf("isMutuallyInverseMatrices");
-    else
-        printf("isNotMutuallyInverseMatrices");
+//    if (isMutuallyInverseMatrices(m1, m2))
+//        printf("isMutuallyInverseMatrices");
+//    else
+//        printf("isNotMutuallyInverseMatrices");
 }
 
-int max(int a, int b) {
+long long max(long long a, long long b) {
     return a > b ? a : b;
 }
 
@@ -576,8 +576,6 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
     return sum;
 }
 
-
-
 void task_7() {
     matrix m = createMatrixFromArray(
             (int[]) {
@@ -594,6 +592,39 @@ void task_7() {
 
 }
 
+int getMinInArea(matrix m) {
+    position max = getMaxValuePos(m);
+    int rowShape = max.rowIndex;
+    int leftColumn = max.colIndex;
+    int rightColumn = max.colIndex;
+    int min = m.values[max.rowIndex][max.colIndex];
+    while (rowShape > 0) {
+        rowShape--;
+        if (leftColumn > 0)
+            leftColumn--;
+        if (rightColumn < m.nCols)
+            rightColumn++;
+        for (int i = leftColumn; i < rightColumn; i++) {
+            if (m.values[rowShape][i] < min)
+                min = m.values[rowShape][i];
+        }
+    }
+    return min;
+}
+
+void task_8() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    3, 1, 5, 4,
+                    1, 3, 6, 3,
+                    3, 2, 8, 2
+            },
+            3, 4
+    );
+
+//    printf("%d", getMinInArea(m));
+}
+
 
 int main() {
     task_1();
@@ -601,8 +632,9 @@ int main() {
     task_3();
     task_4();
     task_5();
-    //task_6();
+    task_6();
     task_7();
+    task_8();
     test();
 
     return 0;
