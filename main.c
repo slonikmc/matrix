@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-void test_getMemMatrix() {
+void test_getMemMatrix_commonCase() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -16,9 +16,11 @@ void test_getMemMatrix() {
     matrix m2 = getMemMatrix(nRows, nCols);
     assert(m2.nRows == nRows);
     assert(m2.nCols == nCols);
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
-void test_getMemArrayOfMatrices() {
+void test_getMemArrayOfMatrices_commonCase() {
     matrix *m = getMemArrayOfMatrices(3, 2, 2);
     assert(m != 0);
     assert(m[0].nRows == 2);
@@ -27,10 +29,13 @@ void test_getMemArrayOfMatrices() {
     assert(m[1].nCols == 2);
     assert(m[2].nRows == 2);
     assert(m[2].nCols == 2);
-    assert(m[0].values != m[1].values != m[2].values != 0);
+    assert(m[0].values != 0);
+    assert(m[1].values != 0);
+    assert(m[2].values != 0);
+    freeMemMatrices(m, 3);
 }
 
-void test_swapRows1() {
+void test_swapRows_commonCase() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -50,9 +55,11 @@ void test_swapRows1() {
     assert(m.values[0][0] == m2.values[0][0]);
     assert(m.values[0][2] == m2.values[0][2]);
     assert(m.values[0][1] == m2.values[0][1]);
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
-void test_swapRows2() {
+void test_swapRows_sameRow() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -72,14 +79,16 @@ void test_swapRows2() {
     assert(m.values[0][1] == m2.values[0][1]);
     assert(m.values[0][2] == m2.values[0][2]);
     assert(m.values[0][0] == m2.values[0][0]);
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
 void test_swapRows() {
-    test_swapRows1();
-    test_swapRows2();
+    test_swapRows_commonCase();
+    test_swapRows_sameRow();
 }
 
-void test_swapColumns1() {
+void test_swapColumns_commonCase() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -99,9 +108,11 @@ void test_swapColumns1() {
     assert(m.values[0][0] == m2.values[0][1]);
     assert(m.values[0][1] == m2.values[0][0]);
     assert(m.values[0][2] == m2.values[0][2]);
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
-void test_swapColumns2() {
+void test_swapColumns_sameColumn() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -121,14 +132,16 @@ void test_swapColumns2() {
     assert(m.values[0][0] == m2.values[0][0]);
     assert(m.values[0][1] == m2.values[0][1]);
     assert(m.values[0][2] == m2.values[0][2]);
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
 void test_swapColumns() {
-    test_swapColumns1();
-    test_swapColumns2();
+    test_swapColumns_commonCase();
+    test_swapColumns_sameColumn();
 }
 
-int getMin1(const int *a, int n) {
+int getMin_criteriaForSort(const int *a, int n) {
     int min = a[0];
     for (int i = 1; i < n; i++) {
         if (a[i] < min)
@@ -154,8 +167,10 @@ void test_insertionSortRowsMatrixByRowCriteria() {
             },
             3, 3
     );
-    insertionSortRowsMatrixByRowCriteria(m, getMin1);
+    insertionSortRowsMatrixByRowCriteria(m, getMin_criteriaForSort);
     assert(areTwoMatricesEqual(m, m2));
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
 void test_insertionSortColsMatrixByColCriteria() {
@@ -176,11 +191,13 @@ void test_insertionSortColsMatrixByColCriteria() {
             3, 3
     );
 
-    insertionSortColsMatrixByColCriteria(m, getMin1);
+    insertionSortColsMatrixByColCriteria(m, getMin_criteriaForSort);
     assert(areTwoMatricesEqual(m, m2));
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
-void test_isSquareMatrix1() {
+void test_isSquareMatrix_commonCase() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -190,9 +207,10 @@ void test_isSquareMatrix1() {
             3, 3
     );
     assert(isSquareMatrix(m));
+    freeMemMatrix(m);
 }
 
-void test_isSquareMatrix2() {
+void test_isSquareMatrix_matrix_1_at_1() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1
@@ -200,11 +218,12 @@ void test_isSquareMatrix2() {
             1, 1
     );
     assert(isSquareMatrix(m));
+    freeMemMatrix(m);
 }
 
 void test_isSquareMatrix() {
-    test_isSquareMatrix1();
-    test_isSquareMatrix2();
+    test_isSquareMatrix_commonCase();
+    test_isSquareMatrix_matrix_1_at_1();
 }
 
 void test_areTwoMatricesEqual() {
@@ -223,9 +242,11 @@ void test_areTwoMatricesEqual() {
             2, 3
     );
     assert(areTwoMatricesEqual(m, m2));
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
-void test_isEMatrix1() {
+void test_isEMatrix_commonCase() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 0, 0,
@@ -235,9 +256,10 @@ void test_isEMatrix1() {
             3, 3
     );
     assert(isEMatrix(m));
+    freeMemMatrix(m);
 }
 
-void test_isEMatrix2() {
+void test_isEMatrix_matrix_1_at_1() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1,
@@ -245,14 +267,15 @@ void test_isEMatrix2() {
             1, 1
     );
     assert(isEMatrix(m));
+    freeMemMatrix(m);
 }
 
 void test_isEMatrix() {
-    test_isEMatrix1();
-    test_isEMatrix2();
+    test_isEMatrix_commonCase();
+    test_isEMatrix_matrix_1_at_1();
 }
 
-void test_isSymmetricMatrix1() {
+void test_isSymmetricMatrix_commonCase() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 42, 9,
@@ -262,9 +285,10 @@ void test_isSymmetricMatrix1() {
             3, 3
     );
     assert(isSymmetricMatrix(m));
+    freeMemMatrix(m);
 }
 
-void test_isSymmetricMatrix2() {
+void test_isSymmetricMatrix_matrix_1_at_1() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1,
@@ -272,11 +296,12 @@ void test_isSymmetricMatrix2() {
             1, 1
     );
     assert(isSymmetricMatrix(m));
+    freeMemMatrix(m);
 }
 
 void test_isSymmetricMatrix() {
-    test_isSymmetricMatrix1();
-    test_isSymmetricMatrix2();
+    test_isSymmetricMatrix_commonCase();
+    test_isSymmetricMatrix_matrix_1_at_1();
 }
 
 void test_transposeSquareMatrix() {
@@ -298,6 +323,8 @@ void test_transposeSquareMatrix() {
     );
     transposeSquareMatrix(m);
     assert(areTwoMatricesEqual(m, m2));
+    freeMemMatrix(m);
+    freeMemMatrix(m2);
 }
 
 void test_getMinValuePos() {
@@ -312,6 +339,7 @@ void test_getMinValuePos() {
     position pos = getMinValuePos(m);
     assert(pos.rowIndex == 0);
     assert(pos.colIndex == 0);
+    freeMemMatrix(m);
 }
 
 void test_getMaxValuePos() {
@@ -326,11 +354,12 @@ void test_getMaxValuePos() {
     position pos = getMaxValuePos(m);
     assert(pos.rowIndex == 2);
     assert(pos.colIndex == 2);
+    freeMemMatrix(m);
 }
 
 void test() {
-    test_getMemMatrix();
-    test_getMemArrayOfMatrices();
+    test_getMemMatrix_commonCase();
+    test_getMemArrayOfMatrices_commonCase();
     test_swapRows();
     test_swapColumns();
     test_insertionSortRowsMatrixByRowCriteria();
@@ -376,18 +405,7 @@ int getMax(const int *a, int n) {
 }
 
 void sortRowsByMaxElement(matrix m) {
-    int *a = (int *) malloc(sizeof(int) * m.nRows);
-    for (int i = 0; i < m.nRows; i++) {
-        a[i] = getMax(m.values[i], m.nCols);
-    }
-    for (int i = 1; i < m.nRows; i++) {
-        int iRead = i;
-        while (a[iRead - 1] > a[iRead] && iRead > 0) {
-            swap(&a[iRead - 1], &a[iRead]);
-            swapRows(m, iRead - 1, iRead);
-            iRead--;
-        }
-    }
+    insertionSortRowsMatrixByRowCriteria(m, getMax);
 }
 
 void task_2() {
@@ -412,22 +430,7 @@ int getMin(const int *a, int n) {
 }
 
 void sortColsByMinElement(matrix m) {
-    int *a = (int *) malloc(sizeof(int) * m.nCols);
-    int *col = (int *) malloc(sizeof(int) * m.nRows);
-    for (int j = 0; j < m.nCols; j++) {
-        for (int i = 0; i < m.nRows; i++) {
-            col[i] = m.values[i][j];
-        }
-        a[j] = getMin(col, m.nRows);
-    }
-    for (int j = 1; j < m.nCols; j++) {
-        int iRead = j;
-        while (a[iRead - 1] > a[iRead] && iRead > 0) {
-            swap(&a[iRead - 1], &a[iRead]);
-            swapColumns(m, iRead - 1, iRead);
-            iRead--;
-        }
-    }
+    insertionSortColsMatrixByColCriteria(m, getMin);
 }
 
 void task_3() {
@@ -616,13 +619,13 @@ void task_8() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     3, 1, 5, 4,
-                    1, 3, 6, 3,
-                    3, 2, 8, 2
+                    7, 2, 6, 8,
+                    11, 10, 13, 9
             },
             3, 4
     );
 
-//    printf("%d", getMinInArea(m));
+//    printf("%d", getMinInArea(m);
 }
 
 

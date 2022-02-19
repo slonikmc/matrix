@@ -76,7 +76,7 @@ void swapColumns(matrix m, int j1, int j2) {
     }
 }
 
-void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
+void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(const int *, int)) {
     int *a = (int *) malloc(sizeof(int) * m.nRows);
     for (int i = 0; i < m.nRows; i++) {
         a[i] = criteria(m.values[i], m.nCols);
@@ -91,7 +91,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int))
     }
 }
 
-void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
+void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(const int *, int)) {
     int *a = (int *) malloc(sizeof(int) * m.nCols);
     int *col = (int *) malloc(sizeof(int) * m.nRows);
     for (int j = 0; j < m.nCols; j++) {
