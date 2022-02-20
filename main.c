@@ -744,6 +744,41 @@ void task_11() {
     //   printf("%d", getNSpecialElement(m));
 }
 
+position getLeftMin(matrix m) {
+    position min = {0, 0};
+    for (int i = 0; i < m.nRows; i++)
+        for (int j = 0; j < m.nCols; j++)
+            if (m.values[i][j] == m.values[min.rowIndex][min.colIndex] && i < min.rowIndex ||
+                m.values[i][j] < m.values[min.rowIndex][min.colIndex])
+                min = (position) {i, j};
+}
+
+void swapPenultimateRow(matrix m, int n) {
+    position min = getLeftMin(m);
+    int *columnForSwap = malloc(sizeof(int) * m.nRows);
+
+    for (int i = 0; i < m.nRows; i++) {
+        columnForSwap[i] = m.values[i][min.colIndex];
+    }
+
+    for (int j = 0; j < m.nCols; j++) {
+        m.values[n][j] = columnForSwap[j];
+    }
+}
+
+task_12() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 1
+            },
+            3, 3
+    );
+    swapPenultimateRow(m, m.nRows - 2);
+    // outputMatrix(m);
+}
+
 int main() {
     task_1();
     task_2();
@@ -756,6 +791,7 @@ int main() {
     task_9();
     task_10();
     task_11();
+    task_12();
     test();
 
     return 0;
