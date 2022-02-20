@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <math.h>
 
 void test_getMemMatrix_commonCase() {
     matrix m = createMatrixFromArray(
@@ -629,6 +630,47 @@ void task_8() {
 }
 
 
+float getDistance(const int *a, int n) {
+    float distance = 0;
+    for (int i = 0; i < n; i++) {
+        distance += (float) a[i] * (float) a[i];
+    }
+
+    return sqrtf(distance);
+}
+
+void insertionSortRowsMatrixByRowCriteriaF(matrix m, float (*criteria)(const int *, int)) {
+    float *a = (float *) malloc(sizeof(float) * m.nRows);
+    for (int i = 0; i < m.nRows; i++) {
+        a[i] = criteria(m.values[i], m.nCols);
+    }
+    for (int i = 1; i < m.nRows; i++) {
+        int iRead = i;
+        while (a[iRead - 1] > a[iRead] && iRead > 0) {
+            swap((int *) &a[iRead - 1], (int *) &a[iRead]);
+            swapRows(m, iRead - 1, iRead);
+            iRead--;
+        }
+    }
+}
+
+void sortByDistances(matrix m) {
+    insertionSortRowsMatrixByRowCriteriaF(m, getDistance);
+}
+
+void task_9() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    0, 0, 0, 0,
+                    5, 4, 2, 3,
+                    1, 1, 2, 3
+            },
+            3, 4
+    );
+
+    sortByDistances(m);
+}
+
 int main() {
     task_1();
     task_2();
@@ -638,6 +680,7 @@ int main() {
     task_6();
     task_7();
     task_8();
+    task_9();
     test();
 
     return 0;
