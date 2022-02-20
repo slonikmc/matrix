@@ -717,6 +717,33 @@ void task_10() {
     // printf("%d", countEqClassesByRowsSum(m));
 }
 
+int getNSpecialElement(matrix m) {
+    int nSpecialElements = 0;
+    for (int j = 0; j < m.nCols; j++) {
+        int sum = 0;
+        for (int iSum = 0; iSum < m.nRows; iSum++)
+            sum += m.values[iSum][j];
+        for (int i = 0; i < m.nRows; i++) {
+            if (m.values[i][j] > sum - m.values[i][j])
+                nSpecialElements++;
+        }
+    }
+    return nSpecialElements;
+}
+
+void task_11() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 5, 4,
+                    2, 3, 6, 7,
+                    12, 2, 1, 2
+            },
+            3, 4
+    );
+
+    //   printf("%d", getNSpecialElement(m));
+}
+
 int main() {
     task_1();
     task_2();
@@ -728,6 +755,7 @@ int main() {
     task_8();
     task_9();
     task_10();
+    task_11();
     test();
 
     return 0;
