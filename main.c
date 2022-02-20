@@ -671,6 +671,52 @@ void task_9() {
     sortByDistances(m);
 }
 
+int cmp_long_long(const void *pa, const void *pb) {
+    int arg1 = *(const int *) pa;
+    int arg2 = *(const int *) pb;
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+
+    return 0;
+}
+
+int countNUnique(long long *a, int n) {
+    int nUnique = 1;
+    int iRead = 1;
+    while (iRead < n) {
+        if (a[iRead] > a[iRead - 1])
+            nUnique++;
+        iRead++;
+    }
+    return nUnique;
+}
+
+int countEqClassesByRowsSum(matrix m) {
+    long long *eqClasses = (long long *) malloc(sizeof(long long) * m.nRows);
+    for (int i = 0; i < m.nRows; i++) {
+        eqClasses[i] = getSum(m.values[i], m.nCols);
+    }
+    qsort(eqClasses, m.nRows, sizeof(long long), cmp_long_long);
+    int nUniqueClasses = countNUnique(eqClasses, m.nRows);
+
+    return nUniqueClasses;
+}
+
+void task_10() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    7, 1,
+                    2, 7,
+                    5, 4,
+                    4, 3,
+                    1, 6,
+                    8, 0
+            },
+            6, 2
+    );
+    // printf("%d", countEqClassesByRowsSum(m));
+}
+
 int main() {
     task_1();
     task_2();
@@ -681,6 +727,7 @@ int main() {
     task_7();
     task_8();
     task_9();
+    task_10();
     test();
 
     return 0;
