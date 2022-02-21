@@ -779,6 +779,51 @@ task_12() {
     // outputMatrix(m);
 }
 
+bool isNonDescendingSorted(int *a, int n) {
+    for (int i = 1; i < n; i++)
+        if (a[i - 1] > a[i])
+            return false;
+    return true;
+}
+
+bool hasAllNonDescendingRows(matrix m) {
+    for (int i = 0; i < m.nRows; i++)
+        if (!isNonDescendingSorted(m.values[i], m.nCols))
+            return false;
+    return true;
+}
+
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
+    int nNonDescendingRowsMatrices = 0;
+    for (int i = 0; i < nMatrix; i++)
+        if (hasAllNonDescendingRows(ms[i]))
+            nNonDescendingRowsMatrices++;
+    return nNonDescendingRowsMatrices;
+}
+
+task_13() {
+    matrix *arrayMatrix = createArrayOfMatrixFromArray(
+            (int[]) {
+                    7, 1,
+                    1, 1,
+
+                    1, 6,
+                    2, 2,
+
+                    5, 4,
+                    2, 3,
+
+                    1, 3,
+                    7, 9
+            },
+            4, 2, 2
+    );
+    int answer_at_task_13 = countNonDescendingRowsMatrices(arrayMatrix, 4);
+    // printf("%d", answer_at_task_13);           print 2
+}
+
+
+
 int main() {
     task_1();
     task_2();
@@ -792,6 +837,7 @@ int main() {
     task_10();
     task_11();
     task_12();
+    task_13();
     test();
 
     return 0;
