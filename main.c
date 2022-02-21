@@ -766,7 +766,7 @@ void swapPenultimateRow(matrix m, int n) {
     }
 }
 
-task_12() {
+void task_12() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
@@ -801,7 +801,7 @@ int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
     return nNonDescendingRowsMatrices;
 }
 
-task_13() {
+void task_13() {
     matrix *arrayMatrix = createArrayOfMatrixFromArray(
             (int[]) {
                     7, 1,
@@ -822,7 +822,81 @@ task_13() {
     // printf("%d", answer_at_task_13);           print 2
 }
 
+int countValues(const int *a, int n, int value) {
+    int valueTracker = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == value)
+            valueTracker++;
+    }
+    return valueTracker;
+}
 
+int countZeroRows(matrix m) {
+    int nZeroRows = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        if (countValues(m.values[i], m.nCols, 0) == m.nCols)
+            nZeroRows++;
+    }
+    return nZeroRows;
+}
+
+void test_countZeroRows_commonCase() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    0, 0,
+                    2, 0,
+                    5, 1,
+                    0, 3,
+                    0, 0,
+                    8, 3
+            },
+            6, 2
+    );
+    assert(countZeroRows(m) == 2);
+    freeMemMatrix(m);
+}
+
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
+    int *matrixZeroRows = malloc(sizeof(int) * nMatrix);
+    int maxZeroRows = 0;
+    for (int i = 0; i < nMatrix; i++) {
+        matrixZeroRows[i] = countZeroRows(ms[i]);
+        maxZeroRows = max(maxZeroRows, matrixZeroRows[i]);
+    }
+    for (int i = 0; i < nMatrix; i++) {
+        if (matrixZeroRows[i] == maxZeroRows)
+            outputMatrix(ms[i]);
+    }
+}
+
+void task_14() {
+    matrix *arrayMatrix = createArrayOfMatrixFromArray(
+            (int[]) {
+                    0, 1,
+                    1, 0,
+                    0, 0,
+
+                    1, 1,
+                    2, 1,
+                    1, 1,
+
+                    0, 0,
+                    0, 0,
+                    4, 7,
+
+                    0, 0,
+                    0, 1,
+                    0, 0,
+
+                    0, 1,
+                    0, 2,
+                    0, 3
+            },
+            5, 3, 2
+    );
+    test_countZeroRows_commonCase();
+    // printMatrixWithMaxZeroRows(arrayMatrix, 5);     print true answer at task.
+}
 
 int main() {
     task_1();
@@ -838,6 +912,8 @@ int main() {
     task_11();
     task_12();
     task_13();
+    task_14();
+
     test();
 
     return 0;

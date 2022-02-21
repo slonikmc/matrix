@@ -59,11 +59,13 @@ void outputMatrix(matrix m) {
             printf("%d ", m.values[i][j]);
         printf("\n");
     }
+    printf("%\n");
 }
 
 void outputMatrices(matrix *ms, int nMatrices) {
     for (int i = 0; i < nMatrices; i++)
         outputMatrix(ms[i]);
+    printf("\n");
 }
 
 void swapRows(matrix m, int i1, int i2) {
