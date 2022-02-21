@@ -898,6 +898,49 @@ void task_14() {
     // printMatrixWithMaxZeroRows(arrayMatrix, 5);     print true answer at task.
 }
 
+int getNorm(matrix m) {
+    position minElem = getMinValuePos(m);
+    position maxElem = getMaxValuePos(m);
+    return max(abs(m.values[minElem.rowIndex][minElem.colIndex]), m.values[maxElem.rowIndex][maxElem.colIndex]);
+}
+
+void printMatrixWithMinNorm(matrix *ms, int nMatrix) {
+    int minNorm = INT_MAX;
+    int *matrixMinNorm = malloc(sizeof(int) * nMatrix);
+    for (int i = 0; i < nMatrix; i++) {
+        matrixMinNorm[i] = getNorm(ms[i]);
+        minNorm = minNorm > matrixMinNorm[i] ? matrixMinNorm[i] : minNorm;
+    }
+
+    for (int i = 0; i < nMatrix; i++) {
+        if (matrixMinNorm[i] == minNorm)
+            outputMatrix(ms[i]);
+    }
+}
+
+void task_15() {
+    matrix *arrayMatrix = createArrayOfMatrixFromArray(
+            (int[]) {
+                    0, 1,
+                    -1, 0,
+
+                    2, 2,
+                    2, -1,
+
+                    0, 0,
+                    4, 7,
+
+                    0, 0,
+                    0, 1,
+
+                    0, 1,
+                    0, 2
+            },
+            5, 2, 2
+    );
+    printMatrixWithMinNorm(arrayMatrix, 5);
+}
+
 int main() {
     task_1();
     task_2();
@@ -913,6 +956,7 @@ int main() {
     task_12();
     task_13();
     task_14();
+    task_15();
 
     test();
 
