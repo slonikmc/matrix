@@ -1,7 +1,6 @@
 #include "libs/data_structures/matrix/matrix.h"
 #include <assert.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <math.h>
 
 void test_getMemMatrix_commonCase() {
@@ -187,7 +186,7 @@ void test_insertionSortColsMatrixByColCriteria() {
             (int[]) {
                     8, 7, 8,
                     6, 4, 5,
-                    7, 8, 1
+                    1, 7, 8
             },
             3, 3
     );
@@ -385,9 +384,21 @@ void task_1() {
             },
             3, 3
     );
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    7, 8, 9,
+                    4, 5, 6,
+                    1, 2, 3
+            },
+            3, 3
+    );
     position min = getMinValuePos(m);
     position max = getMaxValuePos(m);
     swapRows(m, min.rowIndex, max.rowIndex);
+    assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
+
 }
 
 void swap(int *a, int *b) {
@@ -418,7 +429,18 @@ void task_2() {
             },
             3, 3
     );
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    4, 5, 6,
+                    7, 8, 9,
+                    1, 42, 3
+            },
+            3, 3
+    );
     sortRowsByMaxElement(m);
+    assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
 }
 
 int getMin(const int *a, int n) {
@@ -437,13 +459,24 @@ void sortColsByMinElement(matrix m) {
 void task_3() {
     matrix m = createMatrixFromArray(
             (int[]) {
-                    1, 9, 3,
-                    4, 5, 6,
-                    7, 8, 9
+                    3, 5, 2, 4, 3, 3,
+                    2, 5, 1, 8, 2, 7,
+                    6, 1, 4, 4, 8, 3
             },
-            3, 3
+            3, 6
+    );
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    5, 2, 3, 3, 3, 4,
+                    5, 1, 2, 2, 7, 8,
+                    1, 4, 6, 8, 3, 4
+            },
+            3, 6
     );
     sortColsByMinElement(m);
+    assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
 }
 
 matrix mulMatrices(matrix m1, matrix m2) {
@@ -458,9 +491,11 @@ matrix mulMatrices(matrix m1, matrix m2) {
 }
 
 void getSquareOfMatrixIfSymmetric(matrix *m) {
-    matrix m1 = *m;
-    matrix m2 = *m;
-    *m = mulMatrices(m1, m2);
+    if (isSymmetricMatrix(*m)) {
+        matrix m1 = *m;
+        matrix m2 = *m;
+        *m = mulMatrices(m1, m2);
+    }
 }
 
 void task_4() {
@@ -472,9 +507,18 @@ void task_4() {
             },
             3, 3
     );
-    if (isSymmetricMatrix(m)) {
-        getSquareOfMatrixIfSymmetric(&m);
-    }
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    14, 10, 10,
+                    10, 9, 10,
+                    10, 10, 14
+            },
+            3, 3
+    );
+    getSquareOfMatrixIfSymmetric(&m);
+    assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
 }
 
 bool isUnique(const long long *a, int n) {
@@ -498,7 +542,7 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
     assert(isSquareMatrix(m));
     long long *sumOfElemRow = (long long *) malloc(sizeof(int) * m.nRows);
     for (int i = 0; i < m.nRows; i++) {
-        sumOfElemRow[i] = getSum(m.values[i][0], m.nCols);
+        sumOfElemRow[i] = getSum(m.values[i], m.nCols);
     }
     if (isUnique(sumOfElemRow, m.nRows)) {
         for (int i = 0; i < m.nRows; i++) {
@@ -513,7 +557,7 @@ void task_5() {
     matrix m = createMatrixFromArray(
             (int[]) {
                     1, 1, 3,
-                    2, 1, 2,
+                    2, 3, 2,
                     7, 8, 9
             },
             3, 3
@@ -521,14 +565,15 @@ void task_5() {
     matrix answerM = createMatrixFromArray(
             (int[]) {
                     1, 2, 7,
-                    1, 1, 8,
+                    1, 3, 8,
                     3, 2, 9
             },
             3, 3
     );
     transposeIfMatrixHasNotEqualSumOfRows(m);
-    outputMatrix(m);
     assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
 }
 
 bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
@@ -1018,7 +1063,7 @@ void task_16() {
     freeMemMatrix(m);
 }
 
-int main() {
+void tasks() {
     task_1();
     task_2();
     task_3();
@@ -1035,6 +1080,11 @@ int main() {
     task_14();
     task_15();
     task_16();
+}
+
+int main() {
+
+    tasks();
     test();
 
     return 0;
