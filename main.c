@@ -496,9 +496,15 @@ long long getSum(const int *a, int n) {
 
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
     assert(isSquareMatrix(m));
+    long long *sumOfElemRow = (long long *) malloc(sizeof(int) * m.nRows);
     for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < i; j++) {
-            swap(&m.values[i][j], &m.values[j][i]);
+        sumOfElemRow[i] = getSum(m.values[i][0], m.nCols);
+    }
+    if (isUnique(sumOfElemRow, m.nRows)) {
+        for (int i = 0; i < m.nRows; i++) {
+            for (int j = 0; j < i; j++) {
+                swap(&m.values[i][j], &m.values[j][i]);
+            }
         }
     }
 }
@@ -512,12 +518,17 @@ void task_5() {
             },
             3, 3
     );
-    long long *a = (long long *) malloc(sizeof(int) * m.nRows);
-    for (int i = 0; i < m.nRows; i++) {
-        a[i] = getSum(m.values[i], m.nCols);
-    }
-    if (isUnique(a, m.nRows))
-        transposeIfMatrixHasNotEqualSumOfRows(m);
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 7,
+                    1, 1, 8,
+                    3, 2, 9
+            },
+            3, 3
+    );
+    transposeIfMatrixHasNotEqualSumOfRows(m);
+    outputMatrix(m);
+    assert(areTwoMatricesEqual(m, answerM));
 }
 
 bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
@@ -542,10 +553,9 @@ void task_6() {
             },
             2, 2
     );
-//    if (isMutuallyInverseMatrices(m1, m2))
-//        printf("isMutuallyInverseMatrices");
-//    else
-//        printf("isNotMutuallyInverseMatrices");
+    assert(isMutuallyInverseMatrices(m1, m2) == true);
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 long long max(long long a, long long b) {
@@ -589,11 +599,8 @@ void task_7() {
             },
             3, 4
     );
-    long long res = findSumOfMaxesOfPseudoDiagonal(m);
-
-//    Выводит 20
-//    printf("%lld", res);
-
+    assert(findSumOfMaxesOfPseudoDiagonal(m) == 20);
+    freeMemMatrix(m);
 }
 
 int getMinInArea(matrix m) {
@@ -625,10 +632,9 @@ void task_8() {
             },
             3, 4
     );
-
-//    printf("%d", getMinInArea(m);
+    assert(getMinInArea(m) == 1);
+    freeMemMatrix(m);
 }
-
 
 float getDistance(const int *a, int n) {
     float distance = 0;
@@ -667,8 +673,18 @@ void task_9() {
             },
             3, 4
     );
-
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    0, 0, 0, 0,
+                    1, 1, 2, 3,
+                    5, 4, 2, 3
+            },
+            3, 4
+    );
     sortByDistances(m);
+    assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
 }
 
 int cmp_long_long(const void *pa, const void *pb) {
@@ -714,7 +730,8 @@ void task_10() {
             },
             6, 2
     );
-    // printf("%d", countEqClassesByRowsSum(m));
+    assert(countEqClassesByRowsSum(m) == 3);
+    freeMemMatrix(m);
 }
 
 int getNSpecialElement(matrix m) {
@@ -740,8 +757,8 @@ void task_11() {
             },
             3, 4
     );
-
-    //   printf("%d", getNSpecialElement(m));
+    assert(getNSpecialElement(m) == 2);
+    freeMemMatrix(m);
 }
 
 position getLeftMin(matrix m) {
@@ -751,16 +768,15 @@ position getLeftMin(matrix m) {
             if (m.values[i][j] == m.values[min.rowIndex][min.colIndex] && i < min.rowIndex ||
                 m.values[i][j] < m.values[min.rowIndex][min.colIndex])
                 min = (position) {i, j};
+    return min;
 }
 
 void swapPenultimateRow(matrix m, int n) {
     position min = getLeftMin(m);
     int *columnForSwap = malloc(sizeof(int) * m.nRows);
-
     for (int i = 0; i < m.nRows; i++) {
         columnForSwap[i] = m.values[i][min.colIndex];
     }
-
     for (int j = 0; j < m.nCols; j++) {
         m.values[n][j] = columnForSwap[j];
     }
@@ -775,8 +791,18 @@ void task_12() {
             },
             3, 3
     );
+    matrix answerM = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    1, 4, 7,
+                    7, 8, 1
+            },
+            3, 3
+    );
     swapPenultimateRow(m, m.nRows - 2);
-    // outputMatrix(m);
+    assert(areTwoMatricesEqual(m, answerM));
+    freeMemMatrix(m);
+    freeMemMatrix(answerM);
 }
 
 bool isNonDescendingSorted(int *a, int n) {
@@ -818,8 +844,8 @@ void task_13() {
             },
             4, 2, 2
     );
-    int answer_at_task_13 = countNonDescendingRowsMatrices(arrayMatrix, 4);
-    // printf("%d", answer_at_task_13);           print 2
+    assert(countNonDescendingRowsMatrices(arrayMatrix, 4) == 2);
+    freeMemMatrices(arrayMatrix, 4);
 }
 
 int countValues(const int *a, int n, int value) {
@@ -867,6 +893,7 @@ void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
         if (matrixZeroRows[i] == maxZeroRows)
             outputMatrix(ms[i]);
     }
+    free(matrixZeroRows);
 }
 
 void task_14() {
@@ -896,6 +923,7 @@ void task_14() {
     );
     test_countZeroRows_commonCase();
     // printMatrixWithMaxZeroRows(arrayMatrix, 5);     print true answer at task.
+    freeMemMatrices(arrayMatrix, 5);
 }
 
 int getNorm(matrix m) {
@@ -938,7 +966,56 @@ void task_15() {
             },
             5, 2, 2
     );
-    printMatrixWithMinNorm(arrayMatrix, 5);
+    // printMatrixWithMinNorm(arrayMatrix, 5);
+    freeMemMatrices(arrayMatrix, 5);
+}
+
+int min2(int a, int b) {
+    return a < b ? a : b;
+}
+
+int getNSpecialElement2(matrix m) {
+    int nSpecElem = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            int isSpec = 1;
+            int valueChecker;
+            int curElem = m.values[i][j];
+            for (int lIndex = 0; lIndex < j; lIndex++) {
+                valueChecker = min2(curElem, m.values[i][lIndex]);
+                if (valueChecker == curElem) {
+                    isSpec = 0;
+                    break;
+                }
+            }
+            for (int rIndex = j + 1; rIndex < m.nCols; rIndex++) {
+                valueChecker = min2(curElem, m.values[i][rIndex]);
+                if (valueChecker != curElem) {
+                    isSpec = 0;
+                    break;
+                }
+            }
+            if (isSpec)
+                nSpecElem++;
+        }
+    }
+
+    return nSpecElem;
+}
+
+
+void task_16() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    2, 3, 5, 5, 4,
+                    6, 2, 3, 8, 14,
+                    12, 12, 2, 1, 2
+            },
+            3, 5
+    );
+
+    assert(getNSpecialElement2(m) == 4);
+    freeMemMatrix(m);
 }
 
 int main() {
@@ -957,7 +1034,7 @@ int main() {
     task_13();
     task_14();
     task_15();
-
+    task_16();
     test();
 
     return 0;
